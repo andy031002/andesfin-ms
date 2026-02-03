@@ -1,0 +1,10 @@
+server.port=3000
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/andesfin_db
+spring.datasource.username=andesfin_user
+spring.datasource.password=andesfin_pass
+
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
