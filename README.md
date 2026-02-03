@@ -1,123 +1,103 @@
-📌 AndesFin Microservicio de Simulación de Inversiones
+AndesFin – Microservicio de Simulación de Inversiones
 
 Autor: Andres Acurio
 
-🧠 Descripción del Proyecto
+Descripción
 
-Este proyecto consiste en el desarrollo de un microservicio backend para la fintech AndesFin, cuyo objetivo es permitir a los usuarios simular combinaciones de productos financieros y obtener una propuesta de inversión óptima en función de su capital disponible.
+Este proyecto corresponde al desarrollo de un microservicio backend para la fintech AndesFin. La aplicación permite simular combinaciones de productos financieros con el fin de obtener una propuesta de inversión que aproveche de mejor manera el capital disponible de un usuario.
 
-El sistema calcula automáticamente la mejor selección de productos considerando:
+El sistema recibe una lista de productos con su costo, riesgo y porcentaje de retorno, evalúa diferentes combinaciones posibles y selecciona la que ofrece mejores resultados sin sobrepasar el capital indicado.
+Cada simulación se guarda para poder consultarla después y mantener un historial.
 
-Capital disponible del usuario
+Tecnologías utilizadas
 
-Costo de cada producto
+Java
 
-Riesgo de cada producto
+Spring Boot
 
-Porcentaje de retorno esperado
+Spring Web
 
-Además, guarda cada simulación realizada para mantener trazabilidad, historial y evidencia de cálculo.
+Spring Data JPA (Hibernate) como ORM
 
-⚙️ Tecnologías Utilizadas
-Tecnología	Uso
-Java 17 / 21	Lenguaje principal
-Spring Boot	Framework backend
-Spring Web	API REST
-Spring Data JPA	ORM obligatorio
-Hibernate	Implementación JPA
-PostgreSQL	Base de datos relacional
-Docker Compose	Levantar la base de datos
-Maven Wrapper	Gestión de dependencias
-🗄 Base de Datos
+PostgreSQL como base de datos relacional
 
-La base de datos se crea automáticamente al levantar Docker.
+Docker Compose para levantar la base de datos
 
-Incluye:
+Maven Wrapper para la gestión del proyecto
 
-Usuarios precargados (mínimo 5)
+Base de datos
 
-Productos financieros precargados (mínimo 8)
+La base de datos se crea automáticamente al iniciar el contenedor de Docker.
+Se incluyen datos iniciales para pruebas:
 
-Las tablas se crean mediante scripts SQL para que el entorno esté listo sin pasos manuales.
+Usuarios precargados
 
-🚀 Cómo Ejecutar el Proyecto
-1️⃣ Levantar la base de datos
+Productos financieros precargados
+
+Esto permite ejecutar el sistema desde cero sin configuraciones manuales.
+
+Cómo ejecutar el proyecto
+1. Levantar la base de datos
 
 Desde la carpeta del proyecto:
 
 docker compose up -d
 
+2. Ejecutar la aplicación
 
-Esto crea:
+En la misma carpeta del proyecto:
 
-Base de datos PostgreSQL
-
-Tablas
-
-Datos iniciales
-
-2️⃣ Ejecutar la aplicación Spring Boot
 .\mvnw spring-boot:run
 
 
-El backend correrá en:
+La aplicación se ejecutará en:
 
 http://localhost:3000
 
-🔌 Endpoints Disponibles
-📍 Obtener usuarios
-GET /usuarios
+Endpoints principales
+Método	Endpoint	Descripción
+GET	/usuarios	Lista todos los usuarios
+GET	/productos	Lista productos activos
+POST	/simulaciones	Realiza una simulación de inversión
+GET	/simulaciones/{usuarioId}	Consulta simulaciones de un usuario
+Lógica de simulación
 
-📍 Obtener productos activos
-GET /productos
+La aplicación evalúa distintas combinaciones de productos considerando:
 
-📍 Crear simulación
-POST /simulaciones
+No superar el capital disponible
 
-📍 Ver simulaciones de un usuario
-GET /simulaciones/{usuarioId}
+Maximizar la ganancia total
 
-🧮 Lógica de Simulación
+Considerar el riesgo
 
-El sistema evalúa todas las combinaciones posibles de productos (algoritmo de optimización tipo fuerza bruta) y selecciona la que:
+Calcular retorno estimado
 
-Maximiza la ganancia total
+Se guardan los productos seleccionados, la ganancia total, el retorno porcentual y el capital restante.
 
-Minimiza el riesgo en caso de empate
+Organización del proyecto
 
-Utiliza mayor parte del capital
+El proyecto está dividido en capas:
 
-Se almacenan:
+Controller: manejo de endpoints REST
 
-Productos seleccionados
+Service: lógica de negocio
 
-Ganancia total
+Repository: acceso a base de datos
 
-Retorno total (%)
+Entity: modelos de las tablas
 
-Capital restante
+DTO: objetos para enviar y recibir datos
 
-🏗 Arquitectura Aplicada
+Estado actual
 
-DTO Pattern → Transferencia de datos entre capas
+El microservicio permite:
 
-Repository Pattern → Abstracción de acceso a datos
+Consultar usuarios
 
-Service Pattern → Lógica de negocio
+Consultar productos
 
-ORM obligatorio → Spring Data JPA / Hibernate
+Ejecutar simulaciones
 
-📂 Estructura del Proyecto
-controller → Endpoints REST  
-service → Lógica de negocio  
-repository → Acceso a datos  
-entity → Modelos de base de datos  
-dto → Objetos de transferencia  
+Guardar resultados
 
-✅ Estado del Proyecto
-
-✔ Microservicio funcional
-✔ Base de datos automática
-✔ Optimización de inversión
-✔ Persistencia de simulaciones
-✔ API REST completa
+Consultar historial de simulaciones
